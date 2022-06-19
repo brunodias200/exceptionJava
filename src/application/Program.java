@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 import models.entities.Reserva;
 
-public class Program {
 
+
+public class Program {
 	public static void main(String[] args) throws ParseException {
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -37,16 +38,10 @@ public class Program {
 			System.out.println("checkout: ");
 			checkout = sdf.parse(sc.next());
 			
-			Date now = new Date();
-			
-			if(checkIn.before(now) || checkout.before(now)) {
-				System.out.println("Erro: alteracao deve ser futura");
-			}
-			else if(!checkout.after(checkIn)) {
-				System.out.println("Erro: checkout antes do checkin");
-			}
-			else {
-				reserva.updateDates(checkIn, checkout);
+			String error = reserva.updateDates(checkIn, checkout);
+			if(error != null) {
+				System.out.println(error);
+			}else {
 				System.out.println(reserva);
 			}
 		}
